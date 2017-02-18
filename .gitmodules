@@ -1,0 +1,3 @@
+[submodule "litetask"]
+	path = litetask
+	url = git@bitbucket.org:solo_heart/litetask.git
