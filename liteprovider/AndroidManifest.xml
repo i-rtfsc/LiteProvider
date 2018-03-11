@@ -4,6 +4,11 @@
     <application>
         android:allowBackup="true"
         android:supportsRtl="true">
+
+        <provider
+            android:name="com.journeyOS.liteprovider.globals.GlobalsProvider"
+            android:authorities="com.journeyOS.globalsprovider"
+            android:exported="true" />
     </application>
 
 </manifest>
