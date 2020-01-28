@@ -45,15 +45,22 @@ public class GlobalsManager {
         mPreferences = Globals.getInstance(mContext);
     }
 
-    private static void isInitialize() {
+    private static boolean isInitialize() {
         if (mContext == null || mPreferences == null) {
-            throw new IllegalArgumentException("you has not initialize!");
+            //throw new IllegalArgumentException("you has not initialize!");
+            LogUtils.w(TAG, "you has not initialize!");
+            return false;
         }
+
+        return true;
     }
 
     public static SharedPreferences getSharedPreferences() {
-        isInitialize();
-        return mPreferences;
+        if (isInitialize()) {
+            return mPreferences;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -63,12 +70,13 @@ public class GlobalsManager {
      * @param value The new value for the globals provider.
      */
     public static void put(String key, boolean value) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
-            return;
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return;
+            }
+            put(key, value, false);
         }
-        put(key, value, false);
     }
 
     /**
@@ -81,15 +89,16 @@ public class GlobalsManager {
      *                 using apply instead.
      */
     public static void put(String key, boolean value, boolean isCommit) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
-            return;
-        }
-        if (isCommit) {
-            mPreferences.edit().putBoolean(key, value).commit();
-        } else {
-            mPreferences.edit().putBoolean(key, value).apply();
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return;
+            }
+            if (isCommit) {
+                mPreferences.edit().putBoolean(key, value).commit();
+            } else {
+                mPreferences.edit().putBoolean(key, value).apply();
+            }
         }
     }
 
@@ -102,12 +111,15 @@ public class GlobalsManager {
      * a String.
      */
     public static boolean getBoolean(String key) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return true;
+            }
+            return getBoolean(key, true);
+        } else {
             return true;
         }
-        return getBoolean(key, true);
     }
 
     /**
@@ -120,12 +132,15 @@ public class GlobalsManager {
      * a String.
      */
     public static boolean getBoolean(String key, boolean defaultValue) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return defaultValue;
+            }
+            return mPreferences.getBoolean(key, defaultValue);
+        } else {
             return defaultValue;
         }
-        return mPreferences.getBoolean(key, defaultValue);
     }
 
     /**
@@ -135,12 +150,13 @@ public class GlobalsManager {
      * @param value The new value for the globals provider.
      */
     public static void put(final String key, int value) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
-            return;
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return;
+            }
+            put(key, value, false);
         }
-        put(key, value, false);
     }
 
     /**
@@ -153,15 +169,16 @@ public class GlobalsManager {
      *                 using apply instead.
      */
     public static void put(final String key, int value, boolean isCommit) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
-            return;
-        }
-        if (isCommit) {
-            mPreferences.edit().putInt(key, value).commit();
-        } else {
-            mPreferences.edit().putInt(key, value).apply();
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return;
+            }
+            if (isCommit) {
+                mPreferences.edit().putInt(key, value).commit();
+            } else {
+                mPreferences.edit().putInt(key, value).apply();
+            }
         }
     }
 
@@ -174,12 +191,15 @@ public class GlobalsManager {
      * a String.
      */
     public static int getInt(String key) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return -1;
+            }
+            return getInt(key, -1);
+        } else {
             return -1;
         }
-        return getInt(key, -1);
     }
 
     /**
@@ -192,12 +212,15 @@ public class GlobalsManager {
      * a String.
      */
     public static int getInt(String key, int defaultValue) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return defaultValue;
+            }
+            return mPreferences.getInt(key, defaultValue);
+        } else {
             return defaultValue;
         }
-        return mPreferences.getInt(key, defaultValue);
     }
 
     /**
@@ -207,12 +230,13 @@ public class GlobalsManager {
      * @param value The new value for the globals provider.
      */
     public static void put(final String key, String value) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
-            return;
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return;
+            }
+            put(key, value, false);
         }
-        put(key, value, false);
     }
 
     /**
@@ -225,15 +249,16 @@ public class GlobalsManager {
      *                 using apply instead.
      */
     public static void put(final String key, String value, boolean isCommit) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
-            return;
-        }
-        if (isCommit) {
-            mPreferences.edit().putString(key, value).commit();
-        } else {
-            mPreferences.edit().putString(key, value).apply();
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return;
+            }
+            if (isCommit) {
+                mPreferences.edit().putString(key, value).commit();
+            } else {
+                mPreferences.edit().putString(key, value).apply();
+            }
         }
     }
 
@@ -246,12 +271,15 @@ public class GlobalsManager {
      * a String.
      */
     public static String getString(String key) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return null;
+            }
+            return getString(key, null);
+        } else {
             return null;
         }
-        return getString(key, null);
     }
 
     /**
@@ -264,12 +292,15 @@ public class GlobalsManager {
      * a String.
      */
     public static String getString(String key, String defaultValue) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return defaultValue;
+            }
+            return mPreferences.getString(key, defaultValue);
+        } else {
             return defaultValue;
         }
-        return mPreferences.getString(key, defaultValue);
     }
 
     /**
@@ -280,12 +311,13 @@ public class GlobalsManager {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static void put(String key, Set<String> value) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
-            return;
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return;
+            }
+            put(key, value, false);
         }
-        put(key, value, false);
     }
 
     /**
@@ -299,15 +331,16 @@ public class GlobalsManager {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static void put(String key, Set<String> value, boolean isCommit) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
-            return;
-        }
-        if (isCommit) {
-            mPreferences.edit().putStringSet(key, value).commit();
-        } else {
-            mPreferences.edit().putStringSet(key, value).apply();
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return;
+            }
+            if (isCommit) {
+                mPreferences.edit().putStringSet(key, value).commit();
+            } else {
+                mPreferences.edit().putStringSet(key, value).apply();
+            }
         }
     }
 
@@ -321,12 +354,15 @@ public class GlobalsManager {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static Set<String> getStringSet(String key) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return null;
+            }
+            return getStringSet(key, null);
+        } else {
             return null;
         }
-        return getStringSet(key, null);
     }
 
     /**
@@ -340,12 +376,15 @@ public class GlobalsManager {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static Set<String> getStringSet(String key, Set<String> defaultValue) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return defaultValue;
+            }
+            return mPreferences.getStringSet(key, defaultValue);
+        } else {
             return defaultValue;
         }
-        return mPreferences.getStringSet(key, defaultValue);
     }
 
     /**
@@ -355,12 +394,13 @@ public class GlobalsManager {
      * @param key The name of the globals provider
      */
     public static void remove(String key) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
-            return;
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return;
+            }
+            remove(key, false);
         }
-        remove(key, false);
     }
 
     /**
@@ -371,31 +411,34 @@ public class GlobalsManager {
      * @param isCommit consider using apply instead
      */
     public static void remove(String key, boolean isCommit) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
-            return;
-        }
-        if (isCommit) {
-            mPreferences.edit().remove(key).commit();
-        } else {
-            mPreferences.edit().remove(key).apply();
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return;
+            }
+            if (isCommit) {
+                mPreferences.edit().remove(key).commit();
+            } else {
+                mPreferences.edit().remove(key).apply();
+            }
         }
     }
 
     protected static void dispatchGlobalsProviderChanged(String key) {
-        isInitialize();
-        for (OnGlobalsProviderChangeListener l : mListeners) {
-            l.onGlobalsProviderChanged(key);
+        if (isInitialize()) {
+            for (OnGlobalsProviderChangeListener l : mListeners) {
+                l.onGlobalsProviderChanged(key);
+            }
         }
     }
 
     protected static void dispatchGlobalsProviderObserver(String key) {
-        isInitialize();
-        ContentResolver cr = mContext.getContentResolver();
-        Uri uri = getUriFor(key);
-        if (cr != null && uri != null) {
-            cr.notifyChange(uri, null);
+        if (isInitialize()) {
+            ContentResolver cr = mContext.getContentResolver();
+            Uri uri = getUriFor(key);
+            if (cr != null && uri != null) {
+                cr.notifyChange(uri, null);
+            }
         }
     }
 
@@ -407,12 +450,15 @@ public class GlobalsManager {
      * @return the corresponding content URI, or null if not present
      */
     public static Uri getUriFor(String key) {
-        isInitialize();
-        if (key == null) {
-            LogUtils.w(TAG, "key was null");
+        if (isInitialize()) {
+            if (key == null) {
+                LogUtils.w(TAG, "key was null");
+                return null;
+            }
+            return Uri.withAppendedPath(GlobalsContract.CONTENT_URI, key);
+        } else {
             return null;
         }
-        return Uri.withAppendedPath(GlobalsContract.CONTENT_URI, key);
     }
 
     /**
@@ -421,13 +467,15 @@ public class GlobalsManager {
      * @param listener The callback that will run.
      */
     public static void registerOnGlobalsProviderChangeListener(OnGlobalsProviderChangeListener listener) {
-        isInitialize();
-        if (listener == null) {
-            throw new IllegalArgumentException("listener should not be null");
-        }
+        if (isInitialize()) {
+            if (listener == null) {
+//            throw new IllegalArgumentException("listener should not be null");
+                LogUtils.w(TAG, "listener should not be null");
+            }
 
-        if (!mListeners.contains(listener)) {
-            mListeners.add(listener);
+            if (!mListeners.contains(listener)) {
+                mListeners.add(listener);
+            }
         }
     }
 
@@ -438,13 +486,15 @@ public class GlobalsManager {
      * @see #registerOnGlobalsProviderChangeListener
      */
     public static void unregisterOnGlobalsProviderChangeListener(OnGlobalsProviderChangeListener listener) {
-        isInitialize();
-        if (listener == null) {
-            throw new IllegalArgumentException("listener should not be null");
-        }
+        if (isInitialize()) {
+            if (listener == null) {
+//            throw new IllegalArgumentException("listener should not be null");
+                LogUtils.w(TAG, "listener should not be null");
+            }
 
-        if (mListeners.contains(listener)) {
-            mListeners.remove(listener);
+            if (mListeners.contains(listener)) {
+                mListeners.remove(listener);
+            }
         }
     }
 

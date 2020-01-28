@@ -23,6 +23,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 
+import com.journeyOS.liteprovider.utils.LogUtils;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +50,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @see GlobalsProvider#notifyChange(Set)
  */
 /* package */ class GlobalsCache {
-
+    private static final String TAG = GlobalsCache.class.getSimpleName();
     private Context mContext;
     private ContentResolver mContentResolver;
 
@@ -114,7 +116,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
     public void addCacheListener(CacheListener l) {
         if (l == null) {
-            throw new IllegalArgumentException("listener should not be null");
+//            throw new IllegalArgumentException("listener should not be null");
+            LogUtils.w(TAG, "listener should not be null");
         }
 
         if (!mCacheListeners.contains(l)) {
@@ -124,7 +127,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
     public void removeCacheListener(CacheListener l) {
         if (l == null) {
-            throw new IllegalArgumentException("listener should not be null");
+//            throw new IllegalArgumentException("listener should not be null");
+            LogUtils.w(TAG, "listener should not be null");
         }
 
         if (mCacheListeners.contains(l)) {

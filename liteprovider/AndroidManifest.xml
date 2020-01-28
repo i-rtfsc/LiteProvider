@@ -7,7 +7,7 @@
 
         <provider
             android:name="com.journeyOS.liteprovider.globals.GlobalsProvider"
-            android:authorities="com.journeyOS.globalsprovider"
+            android:authorities="com.blackshark.gamedock"
             android:exported="true" />
     </application>
 

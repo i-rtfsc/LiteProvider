@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import com.journeyOS.liteprovider.globals.GlobalsCache.CacheListener;
 import com.journeyOS.liteprovider.globals.task.AbstractTask;
 import com.journeyOS.liteprovider.globals.task.SerialExecutor;
+import com.journeyOS.liteprovider.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @see GlobalsEditor
  */
 public class Globals implements SharedPreferences {
-
+    private static final String TAG = Globals.class.getSimpleName();
     private static final String TASK_NAME = "Globals";
 
     private static volatile SharedPreferences sHelper;
@@ -246,7 +247,8 @@ public class Globals implements SharedPreferences {
 
         public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener l) {
             if (l == null) {
-                throw new IllegalArgumentException("listener should not be null");
+//                throw new IllegalArgumentException("listener should not be null");
+                LogUtils.w(TAG, "listener should not be null");
             }
 
             if (!mListeners.contains(l)) {
@@ -256,7 +258,8 @@ public class Globals implements SharedPreferences {
 
         public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener l) {
             if (l == null) {
-                throw new IllegalArgumentException("listener should not be null");
+//                throw new IllegalArgumentException("listener should not be null");
+                LogUtils.w(TAG, "listener should not be null");
             }
 
             if (mListeners.contains(l)) {

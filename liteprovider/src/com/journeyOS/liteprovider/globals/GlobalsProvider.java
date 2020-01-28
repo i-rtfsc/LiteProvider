@@ -88,8 +88,8 @@ public class GlobalsProvider extends ContentProvider implements SQLiteTransactio
 
     static {
         final UriMatcher matcher = sUriMatcher;
-        matcher.addURI(GlobalsContract.AUTHORITY, "globals", GLOBALS);
-        matcher.addURI(GlobalsContract.AUTHORITY, "globals/#", GLOBALS_ID);
+        matcher.addURI(GlobalsContract.AUTHORITY, "provider", GLOBALS);
+        matcher.addURI(GlobalsContract.AUTHORITY, "provider/#", GLOBALS_ID);
     }
 
     private interface GlobalsDeleteQuery {

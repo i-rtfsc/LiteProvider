@@ -35,7 +35,7 @@ public final class GlobalsContract implements BaseColumns {
     /**
      * The authority for the globals provider.
      */
-    public static final String AUTHORITY = "com.journeyOS.globalsprovider";
+    public static final String AUTHORITY = "com.blackshark.gamedock";
 
     /**
      * An URI to the authority for the globals provider.
@@ -46,7 +46,7 @@ public final class GlobalsContract implements BaseColumns {
      * The content:// style URI for this table.
      */
     public static final Uri CONTENT_URI =
-            Uri.withAppendedPath(AUTHORITY_URI, "globals");
+            Uri.withAppendedPath(AUTHORITY_URI, "provider");
 
     /**
      * The MIME type of the results from {@link #CONTENT_URI}.
